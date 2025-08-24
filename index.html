@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Квиз-игра</title>
+        <link rel="stylesheet" href="dist/styles.css" />
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </head>
+
+    <body class="antialiased text-gray-700 bg-gray-100">
+        <div class="flex w-full h-screen justify-center items-center" id="app">
+            <div class="w-full max-w-xl">
+                <div class="flex justify-centerflex justify-center">
+                <div class="w-24 md:w-28 flex items-center justify-center">
+                    <img src="./img/logo.jpg" alt="Logo" class="w-full rounded-lg">
+                </div>
+             </div>
+                <h1 class="font-bold text-5xl text-center text-blue-900">
+                Квиз-игра СНО ВГУИТ
+                </h1>
+
+                <div class="bg-white p-12 round-lg rounded-3xl shadow-lg w-full mt-8">
+                    <div v-if="index < count">
+                    <p class="text-2xl font-bold">
+                        {{ questions[index].question }}
+                    </p>
+                    <label 
+                        :for="key" 
+                        class="block mt-4 border border-gray-300 rounded-lg py-2 px-6 text-lg"
+                        v-for="answer,key in questions[index].answers"
+                        :class="{'hover:bg-gray-100 cursor-pointer' : selectedAnswer == ''},
+                        {'bg-red-200' : selectedAnswer == key},
+                        {'bg-green-200' : key == questions[index]['correctAnswer']&& selectedAnswer != ''}"
+                    >
+                        <input 
+                            type="radio"
+                                :id="key"
+                                class="hidden"
+                                :value="key"
+                                @change="answered($event)"
+                                v-model="selectedAnswer"
+                                :disabled="selectedAnswer != ''"
+                        />
+                        {{ answer }}
+                    </label>
+                   <div class="mt-6 flow-root">
+                    <button 
+                    class="float-right px-5 py-2 bg-indigo-600 text-white text-sm font-bold tracking-wide rounded-full"
+                    v-show="selectedAnswer!= '' && index < count-1"
+                    @click="nextQuestion"
+                    >
+                        Дальше >
+                    </button>
+                    <button 
+                    class="float-right px-5 py-2 bg-indigo-600 text-white text-sm font-bold tracking-wide rounded-full"
+                    v-show="selectedAnswer!= '' && index == count-1"
+                    @click="showResults"
+                    >
+                        Завершить
+                    </button>
+                </div>
+             </div>
+             <div v-else>
+                <h2 class="text-bold text-3xl text-center">Результаты</h2>
+                <div class="flex justify-center space-x-4 mt-6">
+                    <p>Правильные ответы: <span class="text-2xl text-green-700 font-bold">
+                        {{ correctAnswer }}
+                    </span></p>
+                     <p>Неправильные ответы: <span class="text-2xl text-red-700 font-bold">
+                        {{ wrongAnswer }}
+                    </span></p>
+                </div>
+             </div>
+        </div>
+        <div class="flex justify-centerflex justify-center text-center text-gray-500 mt-6 text-sm">
+                &copy; 2025 СНО ВГУИТ. Все права защищены.
+            </div>
+    </div>
+    </div>
+        <script src="scripts.js"></script>
+    </body>
+</html>
