@@ -6,6 +6,7 @@
         <title>Квиз-игра</title>
         <link rel="stylesheet" href="dist/styles.css" />
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
     </head>
 
     <body class="antialiased text-gray-700 bg-gray-100">
@@ -46,38 +47,52 @@
                     </label>
                    <div class="mt-6 flow-root">
                     <button 
-                    class="float-right px-5 py-2 bg-indigo-600 text-white text-sm font-bold tracking-wide rounded-full"
+                    class="mx-auto block px-5 py-2 bg-blue-800 text-white text-sm font-bold tracking-wide rounded-full"
                     v-show="selectedAnswer!= '' && index < count-1"
                     @click="nextQuestion"
                     >
-                        Дальше 
+                        Дальше
                     </button>
                     <button 
-                    class="float-right px-5 py-2 bg-indigo-600 text-white text-sm font-bold tracking-wide rounded-full"
+                    class="mx-auto block px-5 py-2 bg-blue-800 text-white text-sm font-bold tracking-wide rounded-full"
                     v-show="selectedAnswer!= '' && index == count-1"
-                    @click="showResults"
+                    @click="finishQuiz"
                     >
                         Завершить
                     </button>
                 </div>
              </div>
              <div v-else>
-                <h2 class="text-bold text-3xl text-center">Результаты</h2>
-                <div class="flex justify-center space-x-4 mt-6">
-                    <p>Правильные ответы: <span class="text-2xl text-green-700 font-bold">
-                        {{ correctAnswer }}
-                    </span></p>
-                     <p>Неправильные ответы: <span class="text-2xl text-red-700 font-bold">
-                        {{ wrongAnswer }}
-                    </span></p>
-                </div>
-             </div>
-        </div>
-        <div class="flex justify-centerflex justify-center text-center text-gray-500 mt-6 text-sm">
-                &copy; 2025 СНО ВГУИТ. Все права защищены.
+    <!-- Заголовок -->
+    <h2 class="text-3xl font-bold text-center text-indigo-800 mb-8">
+        🎓 Результаты квиза
+    </h2>
+    
+      
+        <div class="mb-8">
+            <div class="flex justify-between text-sm text-gray-600 mb-2">
+                <span>Прогресс</span>
+                <span>{{ correctAnswer }}/{{ correctAnswer + wrongAnswer }}</span>
             </div>
+            <div class="w-full bg-gray-200 rounded-full h-3">
+                <div 
+                    class="bg-gradient-to-r from-green-500 to-blue-800 h-3 rounded-full transition-all duration-500"
+                    :style="{ width: `${(correctAnswer / (correctAnswer + wrongAnswer)) * 100 || 0}%` }"
+                ></div>
+            </div>
+        </div>
+    
+    </div>
+    <div class="text-center mt-8">
+        <p class="text-gray-500 text-sm">&copy; 2025 СНО ВГУИТ. Все права защищены.</p>
+    </div>
+</div>
+        </div>
+        
     </div>
     </div>
-        <script src="scripts.js"></script>
+        <script src="scripts.js">import confetti from 'canvas-confetti';
+</script>
     </body>
 </html>
+
