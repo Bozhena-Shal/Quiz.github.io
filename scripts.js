@@ -26,7 +26,7 @@ const app = Vue.createApp({
             ]
         }
     },
-    methods: {
+  methods: {
         answered(e) {
           this.selectedAnswer = e.target.value
           if(this.selectedAnswer === this.questions[this.index].correctAnswer)
@@ -38,11 +38,18 @@ const app = Vue.createApp({
             this.index++
             this.selectedAnswer = ''
         },
-        showResults() {
-            this.index++
-            
+        celebrate() {
+            confetti({
+                particleCount: 200,
+                spread: 200,
+                origin: { y: 0.6 },
+                colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff']
+            });
         },
-        
+        finishQuiz() {
+            this.celebrate();
+            this.index++
+        }
     }
 })
 
