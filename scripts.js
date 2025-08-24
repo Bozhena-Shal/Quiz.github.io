@@ -6,6 +6,7 @@ const app = Vue.createApp({
             correctAnswer: 0,
             wrongAnswer: 0,
             count: 3,
+            quizFinished: false,
             questions: [
                 {
                     question: "Как расшифровывается аббревиатура СНО?",
@@ -26,7 +27,7 @@ const app = Vue.createApp({
             ]
         }
     },
-  methods: {
+    methods: {
         answered(e) {
           this.selectedAnswer = e.target.value
           if(this.selectedAnswer === this.questions[this.index].correctAnswer)
@@ -47,6 +48,7 @@ const app = Vue.createApp({
             });
         },
         finishQuiz() {
+            this.quizFinished = true;
             this.celebrate();
             this.index++
         }
@@ -54,3 +56,4 @@ const app = Vue.createApp({
 })
 
 app.mount('#app')
+
